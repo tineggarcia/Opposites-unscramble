@@ -10,7 +10,7 @@ dictionary=PyDictionary()
 """
 main function, holds the dictionary
 """
-def main():
+def get_opposite_word_lists():
     #An array of words, second word will be looked through PyDictionary
     opposites_list = [ ["humble", "proud"],
                  ["efficient", "ineffective"],
@@ -21,25 +21,49 @@ def main():
                  ["ridiculous", "sensible"],
                  ["furious", "calm"] ]
 
-    total_words = len(opposites_list)
-    number_of_plays = 10
-    print(total_words)
+    return opposites_list
 
 """
 Function to scramble words, passing word argument. 
 """
 def jumble_word(word_arg):
-    jumbled_char = list(word_arg)  #convert string to List of char (char array)
+    jumbled_char = list(word_arg)
 
     for z in range(len(word_arg)):
-        RandNum = random.randint(0, (len(word_arg) - 1))
-        temp1 = jumbled_char[RandNum]
-        temp2 = jumbled_char[RandNum-1]
-        jumbled_char[RandNum-1] = temp1
-        jumbled_char[RandNum] = temp2
+        rand_num = random.randint(0, (len(word_arg) - 1))
+        temp1 = jumbled_char[rand_num]
+        temp2 = jumbled_char[rand_num-1]
+        jumbled_char[rand_num-1] = temp1
+        jumbled_char[rand_num] = temp2
 
     jumbled_word = ''.join(jumbled_char)
     return jumbled_word
 
+ #Generate array of random numbers without DUPLICATES
+def generate_random_word_idx(no_of_words):
+    random_idx = []
+    for w in range(0,no_of_words):
+        random_idx.append(-1)
+
+    counter = 0
+
+    while(counter < no_of_words):
+        random_num = random.randint(0, (no_of_words - 1))
+        if not random_num in random_idx:
+            random_idx[counter] = random_num
+            counter += 1
+    return random_idx
+
+def main():
+
+    word_list = get_opposite_word_lists()
+    orig_word = word_list[0][0]
+    jumbled_word = jumble_word(orig_word)
+    opposite_word = word_list[0][1]
+    print(orig_word + " = " + jumbled_word + "not " + opposite_word)
+    # print(jumble_word("armageddon"))
+    # print(generate_random_word_idx(10))
+
+
 main()
-print(jumble_word("armageddon"))
+
