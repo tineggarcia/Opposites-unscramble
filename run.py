@@ -10,13 +10,13 @@ import argparse
 from PyDictionary import PyDictionary
 dictionary=PyDictionary()
 
+dev_mode = (os.environ["devMode"] == "true")
 """
-main function, holds the dictionary
+initialise the words and it's opposite meaning
 """
-
-def _init():
+def init_word_list():
     #An array of words, second word will be looked through PyDictionary
-    WORDLIST = [ ["humble", "proud", get_word_meaning("proud")],
+    word_list = [ ["humble", "proud", get_word_meaning("proud")],
                  ["efficient", "ineffective", get_word_meaning("ineffective")],
                  ["smart", "stupid", get_word_meaning("stupid")],
                  ["beautiful", "hideous", get_word_meaning("hideous")],
@@ -43,7 +43,7 @@ def _init():
 
                  ]
 
-    return WORDLIST
+    return word_list
 
 """
 Function to scramble words, passing word argument. 
@@ -80,7 +80,7 @@ def get_word_meaning(word):
     # default to word if no meaning from PyDictionary
     word_meaning = word
 
-    if os.environ["devMode"] != 'true':
+    if not dev_mode:
         meanings = dictionary.meaning(word)
         if meanings != None:
             word_meaning = list(meanings.values())[0][0]
@@ -90,6 +90,9 @@ def get_word_meaning(word):
 def validate_no_of_words(value):
     try:
         no_of_words_to_answer = int(value)
+        # don't validate when running dev mode
+        if dev_mode:
+            return True
         if no_of_words_to_answer < 10 or no_of_words_to_answer > 20:
             print(f"Invalid input {value}, please try again.\n")
             return False
@@ -111,23 +114,46 @@ def show_no_of_words_input():
     return no_of_words_to_answer
 def main(no_of_words_to_answer):
 
-    word_list = _init()
-    for word in word_list:
-        print(word)
-
+    word_list = init_word_list()
     random_idx = generate_random_word_idx(no_of_words_to_answer)
-    print("\n\n")
-    print(random_idx)
-    print("\n\n")
 
+    points_earned = 0
     for x in range(0,no_of_words_to_answer):
-        print(word_list[random_idx[x]][0])
+        points_available = 2
+        word_to_answer = word_list[random_idx[x]]
+        actual_word = word_to_answer[0]
+        opposite_word = word_to_answer[1]
+        opposite_meaning = word_to_answer[2]
+        jumbled_word = jumble_word(actual_word)
 
-    orig_word = word_list[random_idx[3]][0]
-    jumbled_word = jumble_word(orig_word)
-    opposite_word = word_list[random_idx[3]][1]
-    opposite_def = get_word_meaning(opposite_word)
-    print(orig_word + " is " + jumbled_word + " not " + opposite_word + " nor " + opposite_def)
+        print(f"\nYou got {points_earned} so far. Points available for this question is {points_available}.")
+        print("Word #" + str((x+1)) + " is not " + opposite_meaning)
+        answer = input(f"Re-earrange the letters '{jumbled_word}'. >>> ")
+        if answer == actual_word:
+            points_earned = points_earned + points_available
+        else:
+            points_available = points_available - 1
+            answer = input(f"\nWrong! try again. Points available for this question is {points_available}. "
+                           f"\nAnother clue..what's the opposite of {opposite_word}?"
+                           f"\nRe-earrange the letters '{jumbled_word}'. >>> ")
+            if answer == actual_word:
+                points_earned = points_earned + points_available
+            else:
+                points_available = points_available - 1
+
+        if points_available > 0:
+            print(f"\nCorrect! You earned {points_available} points.")
+            print(f"{actual_word} is not {opposite_word} nor {opposite_meaning}\n\n")
+        else:
+            print(f"\nSorry, the answer is {actual_word}.\nYou did not earned any points for this question.\n\n")
+
+    if points_earned == no_of_words_to_answer*2:
+        print(f"You are one in a million! Wow! Perfect score!")
+    elif points_earned > no_of_words_to_answer:
+        print(f"You got it in you! Your final score is {points_earned}")
+    else:
+        print(f"Better luck next time. Your final score is {points_earned}")
+
 
 
 def parse_arguments():
