@@ -90,7 +90,7 @@ def get_word_meaning(word):
 def validate_no_of_words(value):
     try:
         no_of_words_to_answer = int(value)
-        if no_of_words_to_answer < 9 or no_of_words_to_answer > 20:
+        if no_of_words_to_answer < 10 or no_of_words_to_answer > 20:
             print(f"Invalid input {value}, please try again.\n")
             return False
     except ValueError as e:
@@ -106,7 +106,7 @@ def show_no_of_words_input():
     if validate_no_of_words(answer):
         no_of_words_to_answer = int(answer)
     else:
-        show_no_of_words_input()
+        no_of_words_to_answer = show_no_of_words_input()
 
     return no_of_words_to_answer
 def main(no_of_words_to_answer):
@@ -150,7 +150,6 @@ def show_welcome_instructions():
 
 # check if there is an argument passed during running of script
 show_welcome_instructions()
-
 no_of_words_to_answer = parse_arguments()
 
 if no_of_words_to_answer == None:
