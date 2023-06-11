@@ -13,14 +13,32 @@ main function, holds the dictionary
 
 def _init():
     #An array of words, second word will be looked through PyDictionary
-    WORDLIST = [ ["humble", "proud", get_word_meaning("proud", "proud")],
-                 ["efficient", "ineffective", get_word_meaning("ineffective", "ineffective")],
-                 ["smart", "stupid", get_word_meaning("stupid", "stupid")],
-                 ["beautiful", "hideous", get_word_meaning("hideous", "hideous")],
-                 ["scrumptious", "inedible", get_word_meaning("inedible", "inedible")],
-                 ["frugal", "extravagant", get_word_meaning("extravagant", "extravagant")],
-                 ["ridiculous", "sensible", get_word_meaning("sensible", "sensible")],
-                 ["furious", "calm", get_word_meaning("calm", "calm")]]
+    WORDLIST = [ ["humble", "proud", get_word_meaning("proud")],
+                 ["efficient", "ineffective", get_word_meaning("ineffective")],
+                 ["smart", "stupid", get_word_meaning("stupid")],
+                 # ["beautiful", "hideous", get_word_meaning("hideous")],
+                 # ["scrumptious", "inedible", get_word_meaning("inedible")],
+                 # ["frugal", "extravagant", get_word_meaning("extravagant")],
+                 # ["ridiculous", "sensible", get_word_meaning("sensible")],
+                 # ["furious", "calm", get_word_meaning("calm")],
+                 # ["generous", "selfish", get_word_meaning("selfish")],
+                 # ["joyful", "sad", get_word_meaning("sad")],
+                 # ["compassionate", "heartless", get_word_meaning("heartless")],
+                 # ["exaggerated", "understated", get_word_meaning("understated")],
+                 # ["drab", "cheerful", get_word_meaning("cheerful")],
+                 # ["filthy", "clean", get_word_meaning("clean")],
+                 # ["peculiar", "normal", get_word_meaning("normal")],
+                 # ["prudent", "unwise", get_word_meaning("unwise")],
+                 # ["flamboyant", "modest", get_word_meaning("modest")],
+                 # ["infantile", "mature", get_word_meaning("mature")],
+                 # ["fallacious", "true", get_word_meaning("true")],
+                 # ["pristine", "dirty", get_word_meaning("dirty")],
+                 # ["deafening", "soft", get_word_meaning("soft")],
+                 # ["swift", "slow", get_word_meaning("slow")],
+                 # ["plausible", "unlikely", get_word_meaning("unlikely")],
+                 ["rigid", "flexible", get_word_meaning("flexible")]
+
+                 ]
 
     return WORDLIST
 
@@ -55,12 +73,13 @@ def generate_random_word_idx(no_of_words):
             counter += 1
     return random_idx
 
-def get_word_meaning(word, default_meening):
-    word_meaning = default_meening
+def get_word_meaning(word):
+    # default to word if no meaning from PyDictionary
+    word_meaning = word
     meanings = dictionary.meaning(word)
     if meanings != None:
-        meaning = list(meanings.values())[0][0]
-    return meaning
+        word_meaning = list(meanings.values())[0][0]
+    return word_meaning
 
 def main():
 
@@ -71,9 +90,10 @@ def main():
     orig_word = word_list[3][0]
     jumbled_word = jumble_word(orig_word)
     opposite_word = word_list[3][1]
-    opposite_def = get_word_meaning(opposite_word, opposite_word)
+    opposite_def = get_word_meaning(opposite_word)
     print(orig_word + " is " + jumbled_word + " not " + opposite_word)
     print(opposite_def)
+
 
 
 main()
