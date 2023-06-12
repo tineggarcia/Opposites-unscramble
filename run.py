@@ -6,42 +6,73 @@ import os
 import random
 import argparse
 
-
 from PyDictionary import PyDictionary
+
 dictionary=PyDictionary()
 
-dev_mode = (os.environ["devMode"] == "true")
+dev_mode = (os.environ.get("devMode") == "true")
+
+full_word_list = [ ["humble", "proud"],
+              ["efficient", "ineffective"],
+              ["smart", "stupid"],
+              ["beautiful", "hideous"],
+              ["scrumptious", "inedible"],
+              ["frugal", "extravagant"],
+              ["ridiculous", "sensible"],
+              ["furious", "calm"],
+              ["generous", "selfish"],
+              ["joyful", "sad"],
+              ["compassionate", "heartless"],
+              ["exaggerated", "understated"],
+              ["drab", "cheerful"],
+              ["filthy", "clean"],
+              ["peculiar", "normal"],
+              ["prudent", "unwise"],
+              ["flamboyant", "modest"],
+              ["infantile", "mature"],
+              ["fallacious", "true"],
+              ["pristine", "dirty"],
+              ["deafening", "soft"],
+              ["swift", "slow"],
+              ["plausible", "unlikely"],
+              ["rigid", "flexible"]
+            ]
+
 """
 initialise the words and it's opposite meaning
 """
 def init_word_list():
+    word_list = []
+    for items in full_word_list:
+        #An array of words, second word will be looked through PyDictionary
+        word_list.append([items[0],items[1],get_word_meaning(items[1])])
     #An array of words, second word will be looked through PyDictionary
-    word_list = [ ["humble", "proud", get_word_meaning("proud")],
-                 ["efficient", "ineffective", get_word_meaning("ineffective")],
-                 ["smart", "stupid", get_word_meaning("stupid")],
-                 ["beautiful", "hideous", get_word_meaning("hideous")],
-                 ["scrumptious", "inedible", get_word_meaning("inedible")],
-                 ["frugal", "extravagant", get_word_meaning("extravagant")],
-                 ["ridiculous", "sensible", get_word_meaning("sensible")],
-                 ["furious", "calm", get_word_meaning("calm")],
-                 ["generous", "selfish", get_word_meaning("selfish")],
-                 ["joyful", "sad", get_word_meaning("sad")],
-                 ["compassionate", "heartless", get_word_meaning("heartless")],
-                 ["exaggerated", "understated", get_word_meaning("understated")],
-                 ["drab", "cheerful", get_word_meaning("cheerful")],
-                 ["filthy", "clean", get_word_meaning("clean")],
-                 ["peculiar", "normal", get_word_meaning("normal")],
-                 ["prudent", "unwise", get_word_meaning("unwise")],
-                 ["flamboyant", "modest", get_word_meaning("modest")],
-                 ["infantile", "mature", get_word_meaning("mature")],
-                 ["fallacious", "true", get_word_meaning("true")],
-                 ["pristine", "dirty", get_word_meaning("dirty")],
-                 ["deafening", "soft", get_word_meaning("soft")],
-                 ["swift", "slow", get_word_meaning("slow")],
-                 ["plausible", "unlikely", get_word_meaning("unlikely")],
-                 ["rigid", "flexible", get_word_meaning("flexible")]
-
-                 ]
+    # word_list = [ ["humble", "proud", get_word_meaning("proud")],
+    #              ["efficient", "ineffective", get_word_meaning("ineffective")],
+    #              ["smart", "stupid", get_word_meaning("stupid")],
+    #              ["beautiful", "hideous", get_word_meaning("hideous")],
+    #              ["scrumptious", "inedible", get_word_meaning("inedible")],
+    #              ["frugal", "extravagant", get_word_meaning("extravagant")],
+    #              ["ridiculous", "sensible", get_word_meaning("sensible")],
+    #              ["furious", "calm", get_word_meaning("calm")],
+    #              ["generous", "selfish", get_word_meaning("selfish")],
+    #              ["joyful", "sad", get_word_meaning("sad")],
+    #              ["compassionate", "heartless", get_word_meaning("heartless")],
+    #              ["exaggerated", "understated", get_word_meaning("understated")],
+    #              ["drab", "cheerful", get_word_meaning("cheerful")],
+    #              ["filthy", "clean", get_word_meaning("clean")],
+    #              ["peculiar", "normal", get_word_meaning("normal")],
+    #              ["prudent", "unwise", get_word_meaning("unwise")],
+    #              ["flamboyant", "modest", get_word_meaning("modest")],
+    #              ["infantile", "mature", get_word_meaning("mature")],
+    #              ["fallacious", "true", get_word_meaning("true")],
+    #              ["pristine", "dirty", get_word_meaning("dirty")],
+    #              ["deafening", "soft", get_word_meaning("soft")],
+    #              ["swift", "slow", get_word_meaning("slow")],
+    #              ["plausible", "unlikely", get_word_meaning("unlikely")],
+    #              ["rigid", "flexible", get_word_meaning("flexible")]
+    #
+    #              ]
 
     return word_list
 
@@ -63,14 +94,11 @@ def jumble_word(word_arg):
 
 #Generate array of random numbers without DUPLICATES
 def generate_random_word_idx(no_of_words):
-    random_idx = []
-    for w in range(0,no_of_words):
-        random_idx.append(-1)
-
+    total_word_count = len(full_word_list)
+    random_idx = [-1] * no_of_words
     counter = 0
-
     while(counter < no_of_words):
-        random_num = random.randint(0, (no_of_words - 1))
+        random_num = random.randint(0, (total_word_count - 1))
         if not random_num in random_idx:
             random_idx[counter] = random_num
             counter += 1
