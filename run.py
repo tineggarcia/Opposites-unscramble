@@ -156,12 +156,13 @@ def main(no_of_words_to_answer):
         else:
             print(f"\nSorry, the answer is {actual_word}.\nYou did not earned any points for this question.\n\n")
 
+    perfect_score =  no_of_words_to_answer*2
     if points_earned == no_of_words_to_answer*2:
-        print(f"You are one in a million! Wow! Perfect score - {points_earned}/{points_available}")
+        print(f"You are one in a million! Wow! Perfect score - {points_earned}/{perfect_score}")
     elif points_earned > no_of_words_to_answer:
-        print(f"You got it in you! Your final score is {points_earned}/{points_available}.")
+        print(f"You got it in you! Your final score is {points_earned}/{perfect_score}.")
     else:
-        print(f"Better luck next time. Your final score is {points_earned}/{points_available}.")
+        print(f"Better luck next time. Your final score is {points_earned}/{perfect_score}.")
 
     show_play_again = True
     while show_play_again:
