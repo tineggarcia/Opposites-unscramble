@@ -72,6 +72,8 @@ def jumble_word(word_arg):
         jumbled_char[rand_num] = temp2
 
     jumbled_word = ''.join(jumbled_char)
+    if jumbled_word == word_arg:
+        jumbled_word = jumble_word(word_arg)
     return jumbled_word
 
 #Generate array of random numbers without DUPLICATES
