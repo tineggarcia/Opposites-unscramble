@@ -1,8 +1,8 @@
-# Unscrambling the Opposites 
+# Unscrambling the Opposites Game
 
-![deployed game screenshot](assets/deployed_screen.png)
+![deployed game screenshot](docs/game-startup.png)
 
-[Deployed Game Link](https://unscrambling-opposites.herokuapp.com/)
+### [Deployed Game Link](https://unscrambling-opposites.herokuapp.com/)
 
 This is a simple game that tests your vocabulary, but to add a bit of challenge, 
 you have to unscramble the words to guess, whereas these words are the antonyms 
@@ -16,7 +16,7 @@ which will be displayed after the game has ended. Whereas wrong answers of cours
 do not earn you a point.
 &nbsp;
 ## Table of Contents
----
+
 - [UX](#ux)
     - [Users goals](#users-goals)
     - [Website owners goals](#website-owners-goals)
@@ -36,11 +36,9 @@ do not earn you a point.
     - [How to deploy](#how-to-deploy)
 - [Credits](#credits)
 
-
 &nbsp;
+## User Experience
 
-## UX
----
 User Experience
 The purpose of the game is to be really more educational than entertainment. 
 To test how good the user's vocabulary is, particularly how well you know your 
@@ -69,89 +67,125 @@ antonyms. This is a simple command-line game written in Python.
 - Provide an option to the user how many times they wish to play or words they would like to guess and they should be able to play another new game should they wish.
 
 [Back to Table of contents](#table-of-contents)
-
 &nbsp;
 ### Flow Chart
 As part of the development of the game, a flowchart was developed to establish 
 the guidelines and structure of the application.
 
 ![Flow Chart](docs/CI-PP3-Flowchart.png)
-
 &nbsp;
 [Back to Table of contents](#table-of-contents)
-
 &nbsp;
 ## Features
 
-Introduction Welcome section
-Rules of the game
-Questions and its contents
-notification of the result of answers
-Display of summary of points
-Option to play again or terminate
+Here's what the program looks like and how to play the game:
+
+1. Welcome Screen/Main Page upon load. Displays the game name and the
+   rules of the game. The game will start by asking the user the number 
+   of games they want to play.
+   ![Welcome Screen](docs/game-mainpage.png)
 
 
-## Future Features
+2. Rules of the game
+   ![Rules of the game](docs/rules-games.png)
+   
+   User will be first asked to enter the number of games they want 
+   to play or words they wish to guess. Users must enter between 10-20.
+   Input will then be validated next.
+   The idea of the game is for the user to guess and unscramble the
+   jumbled words, a meaning of the word is provided to serve as a clue.
 
-### Game
-Here's what the program does and how the game plays:
+   ![Rules of the game](docs/howmany-games.png)
 
-1. Welcome Screen which asks for the name of the user.
-   ![Welcome Screen](assets/welcome_screen.png)
 
-2. Once the user has input their name, the program prompts the user if the would like to start the game.
-   ![Initiate game](assets/initiate_game.png)
+3. Validation of user's input
+   Upon user's input of the number of games they wish to play, data
+   will be validated, if it's between 10-20, if it is, the game will 
+   start initialising the word bank and the game will start. 
 
-3. If the user decides to quit the game, the program automatically restarts, ready to be played agan.
-   ![Restart screen](assets/restart_screen.png)
+   ![Input validation](docs/input-valid.png)
 
-4. The menu of the game then asks the user what they would like to do next giving them a choice to play immediately, check the rules of the game, or quitting the game.
-   ![Menu screen](assets/menu_screen.png)
+   However, should the user's input is wrong, the user will be notified 
+   and asked to enter another number. 
 
-5. If the user selects to review the rules of the game, a description appears and then the user gets asked to select another options from playing or quitting the game.
-   ![Rules screen](assets/rules_screen.png)
+   ![Input validation](docs/input-invalid.png)
 
-6. If the user chooses to quit the game, a thank you message appears on the screen and the program restarts again, ready to be used.
-   ![Quit screen](assets/restart_screen.png)
 
-7. If the user chooses to play, the firts turn instruction and reference board will populate the screen. Then the user will get propted for a first choice.
-   ![First turn screen](assets/first_turn_screen.png)
+4. Word questions
+   Once the data, which is the number of games is valid, the game will 
+   now move on to the first question. 
 
-8. After the user inputs their choice, the choice gets shown into the board and the cumputer makes its move which gets shown on the board as well. Then the program asks for the next move from the user.
-   ![Second turn screen](assets/second_turn_screen.png)
+   ![First Question](docs/first-question.png)
 
-9. The promt for a choice will continue until the game is won with three symbols in a row or both players have run out of moves in a tie. A feedback message will display in both cases and then the game will restart again ready to be used.
-   ![user wins](assets/user_wins_screen.png)
 
-&nbsp;
+5. Correct answers
+   Upon load of question, user may not unscramble the word, the meaning
+   provided serves as a clue. 
 
-### Future feature to implement
-- To use a better GUI, i.e. Textual Interface that is still command-line.
-- To be able to add and store user profile. 
-- To be able to provide different game mode. 
-- To use spreadsheet or anything the same to store the vocabulary. 
+   For every question, you could get a maximum of 2 points, if you got
+   the correct answer on your first try, you would get 2 points for that
+   question. 
+
+   ![Correct Answer](docs/correct-answer-first.png)
+
+
+6. Incorrect answers
+
+   If you didn't guess the word correctly, you can still try 1 more time
+   but that will give you 1 point only. If you still didn't get it correct
+   on the 2nd try, the next question will be displayed. Obviously you get
+   0 points if you failed to guess it correctly 2 times.
+
+   ![First Incorrect Answer](docs/wrong-answer_first.png)
+
+   ![Second Incorrect Answer](docs/wrong-twoanswers.png)
+
+7. Game's over - Summary of scores 
+   Once user has guessed the last question, the total and final score
+   will be displayed.
+   ![Total Score](docs/scores-summary.png)
+
+
+8. Play another game Y/N
+   After scores are displayed, user will be asked to if he/she wants
+   to play again. 
+
+   ![Play again?](docs/play-again.png)
+
+   If the user wants to play again, a new game will restart from the 
+   beginning. 
+
+   If the user doesn't want to play anymore, the game will bid goodbye
+   and terminate. 
+
+   ![Goodbye?](docs/goodbye.png)
 
 &nbsp;
 [Back to Table of contents](#table-of-contents)
 
 &nbsp;
+## Future Features
 
+- To use a better GUI, i.e. Textual Interface that is still command-line.
+- To be able to add and store user profiles.
+- To be able to provide different game modes.
+- To use a spreadsheet or anything similar to store the vocabulary.
+
+[Back to Table of contents](#table-of-contents)
 ## Technologies Used
 
-Python was used to code the application/gameGitHub - Version control, repositoryGitPod - IDE used to code the program and for some of the manual testing and push to Github.Heroku - to deploy the application/gameLucidchart was used to design the flow chart.Python was used to code the game.Gitpod was used to create this app and then push everything to github.Visual Studio Code was used to work on the app locally.PyCharm was also used to work on the app locally.Github is used to store the repository.Heroku is used to deploy the app.I also used the following Python librariesRandomsysosargparsepydictionaryRichcolorama
-
-Python was used to code the application/gameGitHub - Version control, repositoryGitPod - IDE used to code the program and for some of the manual testing and push to Github.Heroku - to deploy the application/gameLucidchart was used to design the flow chart.Python was used to code the game.Gitpod was used to create this app and then push everything to github.Visual Studio Code was used to work on the app locally.PyCharm was also used to work on the app locally.Github is used to store the repository.Heroku is used to deploy the app.I also used the following Python librariesRandomsysosargparsepydictionaryRichcolorama
-- JavaScript - generated from the python essential template build by Code Institute.
-- GitHub - Version control.
-- GitPod - IDE used to code the program and for some of the manual testing.
-- Heroku - Program deployment for the users to access it without deploy it themselves.
+- Python was used to code the application/game
+- GitHub - Version control, used to store the repository
+- GitPod - IDE used to code the program, testing and push to Github.
+- Heroku - to deploy the application/game
+- Lucidchart was used to design the flowchart.
+- Gitpod was used to create this app and then push everything to 
 
 ### Libraries used
-- Math - for calculation and managment of numbers and data types.
-- Random - to randomize the choices of the computer player.
-- Time - to slow down the respode of the program and allow the user to view the response of the computer.
-- Os - to create the clear_screen() function, which facilitates the UX eliminating previous code on the terminal window making it clutter free.
-
+- random - to randomize the words
+- os - used to get the environment variable ie. "devmode"
+- argparse - used to parse command-line arguments. 
+- pyDictionary - used to get the meaning of the words
 &nbsp;
 
 [Back to Table of contents](#table-of-contents)
@@ -159,41 +193,39 @@ Python was used to code the application/gameGitHub - Version control, repositor
 &nbsp;
 
 ## Testing and Validation
----
 
 ### PEP8
-The code was checked with PEP8 validator and passed with no error found.
+The code was checked with PEP8 validator and passed with no significant error found.
+Though it has a couple of warnings. 
+
+- RESULTS- NO SIGNIFICANT ERROS 
+![Test Results - Warnings Only](docs/pep-testing1.png)
+
+
+![Test Results - Warnings Only](docs/pep-tesing2.png)
 
 &nbsp;
 
 ### Manual testing
-All features have been tested manually with a Mac Mini and a Chromebook with multiple browsers (Chrome, Safari, Firefox).
-
-&nbsp;
-
-### User stories testing
-For the program owner:
-- The game offers entertainment to the users and the chance to play it multiple times.
-- The game contains informations about the game of Tic Tac Toe that the user can easily access.
-- The game give options to the user to quit the game at the menu if they would like.
-
-For new users and returning visitors:
-- The user can improve their skill at the game excercising with this program which puts them against the computer.
-- The user can navigate through the game with very easy commands
-- Always available reference of the possible choices when making a move, makes it easy to find the right commands.
-
+- All features and even vocabulary has been tested manually across different platforms 
+and there were no significant errors.
+- During testing, some meaning/definition that were pulled from pyDictionary 
+  doesn't always make sense or 100% accurate, nevertheless, users may still have a
+  bit of clue. 
+- During testing all the errors/enhancements encountered were entered into GitHub 
+  issues and this serves as guideline of the issues needs to be done/fixed. Once
+  completed, issues are closed. 
 &nbsp;
 
 ### Bugs
-- Game automatically lets user win at first move. Fixed missing colon and indentation in "winner" function.
-- Corrected prompt to the user for the next move to suggest numbers from 0-8, since is 0 index based instead of 1-9.
-- Added extra spaces in-between command line prompt to help visual clarity for the user.
+- Bugs or enhancements were entered into the GitHub Issues. 
 
 &nbsp;
 
 ### Unfixed Bugs
-- None that I'm aware of at the moment.
-
+- Meaning/definition from PyDictionary doesn't always give accurate or sensible 
+  meaning. This is primarily on the PyDictionary and developers can't do anything 
+  about it.
 &nbsp;
 ## Deployment
 There is only this main branch of the project version available in GitHub.
@@ -205,11 +237,11 @@ To deploy this page to Heroku from its [GitHub repository](https://github.com/al
 - Log into or register a new account at [Heroku](https://www.heroku.com/).
 - Click on the button **New** in the top right corner of the dashboard.
 - From the drop-down menu then select **Create new app**.
-- Enter your app name in the first field, the names must be unique so check that then name you have chosen is available on Heroku, then select your region.
+- Enter your app name in the first field, the names must be unique so check that the name you have chosen is available on Heroku, then select your region.
 - Click on **Create App**.
 - Once the app is created you will see the Overview panel of the application. Now move to the **Settings** tab.
 - Once you are in the **Settings** tab scroll down till you find **Config Vars**.
-- Press the button **Reveal Config Vars** and for 'KEY' field, type in 'PORT' and for the value field type in '8000'.
+- Press the button **Reveal Config Vars** and for the 'KEY' field, type in 'PORT' and for the value field type in '8000'.
   Then press the **Add** button.
 - Scroll down to **Buildpacks**. Click the button **Add buildpack** and select 'python'. Do the same step and add 'node.js'.
   **PYTHON MUST BE ON TOP OF THE BUILDPACKS. IF IN YOUR CASE NODE.JS IS FIRST, CLICK AND DRAG PYTHON TO TOP AND SAVE.**
@@ -220,28 +252,18 @@ To deploy this page to Heroku from its [GitHub repository](https://github.com/al
 
   _Clicking **Enable Automatic Deploys**. This will update once you push updates to your Github._
 
-  _Selecting the correct branch for deployment from drop-down menu and pressing **Deploy Branch** button. This will have to be done everytime manually._
+  _Selecting the correct branch for deployment from the drop-down menu and pressing **Deploy Branch** button. This will have to be done everytime manually._
 
 &nbsp;
-
 [Back to Table of contents](#table-of-contents)
-
 &nbsp;
-
 ## Credits
-----
-- 
-- [Python Classmethods and Staticmethods](https://www.youtube.com/watch?v=rq8cL2XMM5M)
-- [Python if __name__ == __main__ Explained with Code Examples](https://www.freecodecamp.org/news/if-name-main-python-example/#:~:text=We%20can%20use%20an%20if,name%20if%20it%20is%20imported.)
-- [Python Tutorial: if __name__ == '__main__'](https://www.youtube.com/watch?v=sugvnHA7ElY)
-- [12 Beginner Python Projects](https://www.youtube.com/watch?v=8ext9G7xspg&t=2189s)
-- [Tic Tac Toe definition - Collins Dictionary](https://www.collinsdictionary.com/dictionary/english/tic-tac-toe#:~:text=Tic%2Dtac%2Dtoe%20is%20a,same%20symbols%20in%20a%20row.)
+
+- [Thesaurus.com](https://www.thesaurus.com) - to look up words.
 - [W3 Schools](https://www.w3schools.com/)
+- [OneByteAtATime](https://www.youtube.com/watch?v=cVm1We204bY) - youtube channel.
 - [Github](https://github.com/marcin-kli/MP1/blob/Milestone-Projects/README.md) - README file example
 - [GitHub](https://github.com/MustafaSahinci/project-portofolio-3) - clear screen function example
-- Mentor: Adegbenga Adeye - For his support and patience!
-
 
 &nbsp;
-
 [Back to Table of contents](#table-of-contents)
