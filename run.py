@@ -8,15 +8,13 @@ import argparse
 
 from PyDictionary import PyDictionary
 
-dictionary=PyDictionary()
-
 dev_mode = (os.environ.get("devMode") == "true")
 
 #An array of words, second word(antonym) will be looked through PyDictionary for displayed text
 full_word_list = [ ["humble", "proud"],
               ["efficient", "ineffective"],
               ["smart", "stupid"],
-              ["beautiful", "hideous"],
+              ["beautiful", "unattractive"],
               ["scrumptious", "inedible"],
               ["frugal", "extravagant"],
               ["ridiculous", "sensible"],
@@ -42,10 +40,22 @@ full_word_list = [ ["humble", "proud"],
 """
 initialise the words and it's opposite meaning
 """
-def init_word_list():
+def init_word_meaning_list(random_idx):
     word_list = []
+    antonym_word_list = []
+    for x in random_idx:
+        antonym_word_list.append(full_word_list[x][1])
+
+    word_dictionary = PyDictionary()
+    word_dictionary.__init__(antonym_word_list)
+
+    word_meanings = word_dictionary.getMeanings()
+
+    # not the best loop - Fix it next time
     for items in full_word_list:
-        word_list.append([items[0],items[1],get_word_meaning(items[1])])
+        word_meaning = word_meanings.get(items[1])
+        if word_meaning != None:
+            word_list.append([items[0],items[1], list(word_meaning.values())[0][0]])
     return word_list
 
 """
@@ -76,17 +86,6 @@ def generate_random_word_idx(no_of_words):
             counter += 1
     return random_idx
 
-def get_word_meaning(word):
-    # default to word if no meaning from PyDictionary
-    word_meaning = word
-
-    if not dev_mode:
-        meanings = dictionary.meaning(word)
-        if meanings != None:
-            word_meaning = list(meanings.values())[0][0]
-
-    return word_meaning
-
 def validate_no_of_words(value):
     try:
         no_of_words_to_answer = int(value)
@@ -109,7 +108,7 @@ def validate_YN(val):
         return False
 
 def show_no_of_words_input():
-    answer = input("how many numbers do you want?\n")
+    answer = input("Please enter how many games/words to guess you want to play(between 10 - 20)?  >>> ")
 
     no_of_words_to_answer = 0
     if validate_no_of_words(answer):
@@ -120,31 +119,32 @@ def show_no_of_words_input():
     return no_of_words_to_answer
 def main(no_of_words_to_answer):
 
-    word_list = init_word_list()
-    for word in word_list:
-        print(f"{word}")
-
     random_idx = generate_random_word_idx(no_of_words_to_answer)
+
+    print("\nInitialising word bank, please wait ...\n")
+    word_list = init_word_meaning_list(random_idx)
+
+    print("\nGame starts now ...\n")
 
     points_earned = 0
     for x in range(0,no_of_words_to_answer):
         points_available = 2
-        word_to_answer = word_list[random_idx[x]]
+        word_to_answer = word_list[x]
         actual_word = word_to_answer[0]
         opposite_word = word_to_answer[1]
         opposite_meaning = word_to_answer[2]
         jumbled_word = jumble_word(actual_word)
 
         print(f"\nYou got {points_earned} so far. Points available for this question is {points_available}.")
-        print(f"Word # {str((x + 1))} : {opposite_meaning}")
-        answer = input(f"Re-earrange the letters '{jumbled_word}'. >>> ")
+        print(f"Word # {str((x + 1))} clue: What word doesn't mean '{opposite_meaning}'")
+        answer = input(f"Re-earrange these jumbled letters: '{jumbled_word}'. >>> ")
         if answer == actual_word:
             points_earned = points_earned + points_available
         else:
             points_available = points_available - 1
             answer = input(f"\nWrong! try again. Points available for this question is {points_available}. "
                            f"\nAnother clue..what's the opposite of {opposite_word}?"
-                           f"\nRe-earrange the letters '{jumbled_word}'. >>> ")
+                           f"\nRe-earrange these jumbled letters: '{jumbled_word}'. >>> ")
             if answer == actual_word:
                 points_earned = points_earned + points_available
             else:
@@ -190,14 +190,16 @@ def parse_arguments():
 
 
 def show_welcome_instructions():
-    print("hello and welcome to my program to test your negative thinking..\n\n\n")
+    print("==================================================")
+    print("Hello! Welcome to Unscrambling the Opposites Game!")
+    print("==================================================\n")
+    print("*** Rules of the Game ***\nGuess the jumbled words and unscramble it based on the clues provided.\n")
 
 # start of program here
-
-# check if there is an argument passed during running of script
 show_welcome_instructions()
-no_of_words_to_answer = parse_arguments()
 
+# first check if there is an argument passed during running of script in command line
+no_of_words_to_answer = parse_arguments()
 if no_of_words_to_answer == None:
     no_of_words_to_answer = show_no_of_words_input()
 
