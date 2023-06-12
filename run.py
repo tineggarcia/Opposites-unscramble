@@ -117,7 +117,8 @@ def show_no_of_words_input():
         no_of_words_to_answer = show_no_of_words_input()
 
     return no_of_words_to_answer
-def main(no_of_words_to_answer):
+
+def main_game(no_of_words_to_answer):
 
     random_idx = generate_random_word_idx(no_of_words_to_answer)
 
@@ -137,8 +138,8 @@ def main(no_of_words_to_answer):
 
         print(f"\nYou got {points_earned} so far. Points available for this question is {points_available}.")
         print(f"Word # {str((x + 1))} clue: What word doesn't mean '{opposite_meaning}'")
-        answer = input(f"Re-earrange these jumbled letters: '{jumbled_word}'. >>> ")
-        if answer == actual_word:
+        answer = input(f"Re-earrange these jumbled letters: '{jumbled_word}'. >>> ").strip()
+        if  answer == actual_word:
             points_earned = points_earned + points_available
         else:
             points_available = points_available - 1
@@ -171,7 +172,7 @@ def main(no_of_words_to_answer):
             show_play_again = False
             if play_again == "Y":
                 no_of_words_to_answer = show_no_of_words_input()
-                main(no_of_words_to_answer)
+                main_game(no_of_words_to_answer)
             else:
                 print("Thanks for playing! Goodbye...")
 
@@ -203,5 +204,5 @@ no_of_words_to_answer = parse_arguments()
 if no_of_words_to_answer == None:
     no_of_words_to_answer = show_no_of_words_input()
 
-main(no_of_words_to_answer)
+main_game(no_of_words_to_answer)
 
