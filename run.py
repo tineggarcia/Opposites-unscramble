@@ -12,6 +12,7 @@ dictionary=PyDictionary()
 
 dev_mode = (os.environ.get("devMode") == "true")
 
+#An array of words, second word(antonym) will be looked through PyDictionary for displayed text
 full_word_list = [ ["humble", "proud"],
               ["efficient", "ineffective"],
               ["smart", "stupid"],
@@ -44,36 +45,7 @@ initialise the words and it's opposite meaning
 def init_word_list():
     word_list = []
     for items in full_word_list:
-        #An array of words, second word will be looked through PyDictionary
         word_list.append([items[0],items[1],get_word_meaning(items[1])])
-    #An array of words, second word will be looked through PyDictionary
-    # word_list = [ ["humble", "proud", get_word_meaning("proud")],
-    #              ["efficient", "ineffective", get_word_meaning("ineffective")],
-    #              ["smart", "stupid", get_word_meaning("stupid")],
-    #              ["beautiful", "hideous", get_word_meaning("hideous")],
-    #              ["scrumptious", "inedible", get_word_meaning("inedible")],
-    #              ["frugal", "extravagant", get_word_meaning("extravagant")],
-    #              ["ridiculous", "sensible", get_word_meaning("sensible")],
-    #              ["furious", "calm", get_word_meaning("calm")],
-    #              ["generous", "selfish", get_word_meaning("selfish")],
-    #              ["joyful", "sad", get_word_meaning("sad")],
-    #              ["compassionate", "heartless", get_word_meaning("heartless")],
-    #              ["exaggerated", "understated", get_word_meaning("understated")],
-    #              ["drab", "cheerful", get_word_meaning("cheerful")],
-    #              ["filthy", "clean", get_word_meaning("clean")],
-    #              ["peculiar", "normal", get_word_meaning("normal")],
-    #              ["prudent", "unwise", get_word_meaning("unwise")],
-    #              ["flamboyant", "modest", get_word_meaning("modest")],
-    #              ["infantile", "mature", get_word_meaning("mature")],
-    #              ["fallacious", "true", get_word_meaning("true")],
-    #              ["pristine", "dirty", get_word_meaning("dirty")],
-    #              ["deafening", "soft", get_word_meaning("soft")],
-    #              ["swift", "slow", get_word_meaning("slow")],
-    #              ["plausible", "unlikely", get_word_meaning("unlikely")],
-    #              ["rigid", "flexible", get_word_meaning("flexible")]
-    #
-    #              ]
-
     return word_list
 
 """
@@ -130,6 +102,12 @@ def validate_no_of_words(value):
 
     return True
 
+def validate_YN(val):
+    if val == 'Y' or val == 'N':
+        return True
+    else:
+        return False
+
 def show_no_of_words_input():
     answer = input("how many numbers do you want?\n")
 
@@ -143,6 +121,9 @@ def show_no_of_words_input():
 def main(no_of_words_to_answer):
 
     word_list = init_word_list()
+    for word in word_list:
+        print(f"{word}")
+
     random_idx = generate_random_word_idx(no_of_words_to_answer)
 
     points_earned = 0
@@ -155,7 +136,7 @@ def main(no_of_words_to_answer):
         jumbled_word = jumble_word(actual_word)
 
         print(f"\nYou got {points_earned} so far. Points available for this question is {points_available}.")
-        print("Word #" + str((x+1)) + " is not " + opposite_meaning)
+        print(f"Word # {str((x + 1))} : {opposite_meaning}")
         answer = input(f"Re-earrange the letters '{jumbled_word}'. >>> ")
         if answer == actual_word:
             points_earned = points_earned + points_available
@@ -176,12 +157,22 @@ def main(no_of_words_to_answer):
             print(f"\nSorry, the answer is {actual_word}.\nYou did not earned any points for this question.\n\n")
 
     if points_earned == no_of_words_to_answer*2:
-        print(f"You are one in a million! Wow! Perfect score!")
+        print(f"You are one in a million! Wow! Perfect score - {points_earned}/{points_available}")
     elif points_earned > no_of_words_to_answer:
-        print(f"You got it in you! Your final score is {points_earned}")
+        print(f"You got it in you! Your final score is {points_earned}/{points_available}.")
     else:
-        print(f"Better luck next time. Your final score is {points_earned}")
+        print(f"Better luck next time. Your final score is {points_earned}/{points_available}.")
 
+    show_play_again = True
+    while show_play_again:
+        play_again = input(f"\n\nDo you want to play again? Y/N >>> ")
+        if validate_YN(play_again):
+            show_play_again = False
+            if play_again == "Y":
+                no_of_words_to_answer = show_no_of_words_input()
+                main(no_of_words_to_answer)
+            else:
+                print("Thanks for playing! Goodbye...")
 
 
 def parse_arguments():
